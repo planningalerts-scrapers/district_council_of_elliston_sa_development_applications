@@ -400,7 +400,7 @@ function getDownText(elements: Element[], topText: string, rightText: string, bo
 // Constructs the full address string based on the specified address components.
 
 function formatAddress(houseNumber: string, streetName: string, suburbName: string) {
-    suburbName = suburbName.replace(/^HD /, "").replace(/ HD$/, "").replace(/ SA$/, "").trim();
+    suburbName = suburbName.replace(/^HD WARD\//, "").replace(/^HD /, "").replace(/ HD$/, "").replace(/ \(RPA\)$/, "").replace(/ SA$/, "").trim();
     suburbName = SuburbNames[suburbName.toUpperCase()] || suburbName;
     let separator = ((houseNumber !== "" || streetName !== "") && suburbName !== "") ? ", " : "";
     return `${houseNumber} ${streetName}${separator}${suburbName}`.trim().replace(/\s\s+/g, " ").toUpperCase().replace(/\*/g, "");
@@ -548,7 +548,7 @@ function parseAddress(houseNumber: string, streetName: string, suburbName: strin
 
             // Check whether the street name is actually a hundred name such as "BARUNGA HD".
 
-            if (streetName.endsWith(" HD") || streetName.endsWith(" HUNDRED")) {  // very likely a hundred name
+            if (streetName.startsWith("HD ") || streetName.endsWith(" HD") || streetName.endsWith(" HUNDRED")) {  // very likely a hundred name
                 let hundredNameMatch = didYouMean(streetName.slice(0, -3), HundredNames, { caseSensitive: false, returnType: didyoumean.ReturnTypeEnums.FIRST_CLOSEST_MATCH, thresholdType: didyoumean.ThresholdTypeEnums.EDIT_DISTANCE, threshold: 0, trimSpaces: true });
                 if (hundredNameMatch === null)
                     candidate.hasInvalidHundredName = true;  // remember that there is an invalid hundred name (for example, "BARUNGA View HD")
