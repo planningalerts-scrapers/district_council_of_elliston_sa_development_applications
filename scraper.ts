@@ -17,7 +17,7 @@ import didYouMean, * as didyoumean from "didyoumean2";
 
 sqlite3.verbose();
 
-const DevelopmentApplicationsUrl = "https://www.elliston.sa.gov.au/page.aspx?u=511";
+const DevelopmentApplicationsUrl = "https://www.elliston.sa.gov.au/council-services/planning-and-development/development-register";
 const CommentUrl = "mailto:dce@elliston.sa.gov.au";
 
 declare const process: any;
@@ -60,7 +60,7 @@ async function insertRow(database, developmentApplication) {
                 console.error(error);
                 reject(error);
             } else {
-                console.log(`    Saved: application \"${developmentApplication.applicationNumber}\" with address \"${developmentApplication.address}\", description \"${developmentApplication.description}\", legal description \"${developmentApplication.legalDescription}\" and received date \"${developmentApplication.receivedDate}\" into the database.`);
+                console.log(`    Saved application \"${developmentApplication.applicationNumber}\" with address \"${developmentApplication.address}\", description \"${developmentApplication.description}\", legal description \"${developmentApplication.legalDescription}\" and received date \"${developmentApplication.receivedDate}\" to the database.`);
                 sqlStatement.finalize();  // releases any locks
                 resolve(row);
             }
